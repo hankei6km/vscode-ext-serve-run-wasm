@@ -1,0 +1,73 @@
+{
+  "name": "vscode-ext-serve-run-wasm",
+  "version": "0.1.0",
+  "displayName": "Experimental - serve the ability to run wasm on the terminal",
+  "description": "Run wasm on VS Code Web Shell",
+  "keywords": [
+    "wasm",
+    "wasi",
+    "webshell"
+  ],
+  "author": "hankei6km <hankei6km@gmail.com> (https://github.com/hankei6km)",
+  "publisher": "hankei6km",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hankei6km/vscode-ext-serve-run-wasm"
+  },
+  "bugs": {
+    "url": "https://github.com/hankei6km/vscode-ext-serve-run-wasm/issues"
+  },
+  "engines": {
+    "vscode": "^1.82.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "license": "MIT",
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {},
+  "scripts": {
+    "build": "npm run compile",
+    "vscode:prepublish": "npm run clean && npm run build && bash scripts/gen-changelog.sh",
+    "build:rust": "cargo build --target wasm32-wasi --release && cp target/wasm32-wasi/release/rust-hello.wasm wasm/bin/hello.wasm",
+    "compile": "node esbuild.config.mjs",
+    "test": "npm run test:unit && npm run test:electron",
+    "pretest": "rimraf tmp && mkdir -p tmp/test_out && rimraf wasm/bin && mkdir wasm/bin && if test \"${GITHUB_ACTIONS}\" = true; then cp wasm/target/wasm32-wasi/debug/chk1.wasm wasm/bin/chk1.wasm; fi",
+    "test:unit": "mocha --require ts-node/register --require source-map-support/register --watch-extensions ts --ui tdd src/extension/test/unit/**/*.test.ts",
+    "test:electron": "xvfb-run node ./out/test/runTest.js",
+    "pretest:electron": "node esbuild.test-electron.config.mjs && if test \"${GITHUB_ACTIONS}\" != true; then cargo build --release && cargo build --manifest-path wasm/Cargo.toml --target wasm32-wasi && cp wasm/target/wasm32-wasi/debug/chk1.wasm wasm/bin/chk1.wasm; fi",
+    "lint:type-check": "tsc --noEmit",
+    "clean": "rimraf out/"
+  },
+  "extensionDependencies": [
+    "ms-vscode.wasm-wasi-core",
+    "ms-vscode.webshell"
+  ],
+  "dependencies": {
+    "@vscode/wasm-wasi": "^0.13.0-pre.1",
+    "minimist": "^1.2.8"
+  },
+  "devDependencies": {
+    "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
+    "@types/minimist": "^1.2.5",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.10.0",
+    "@types/vscode": "^1.84.2",
+    "@vscode/test-electron": "^2.3.8",
+    "@vscode/vsce": "^2.22.0",
+    "assert": "^2.1.0",
+    "esast-util-from-js": "^2.0.1",
+    "esbuild": "^0.19.8",
+    "escape-html": "^1.0.3",
+    "estree-util-to-js": "^2.0.0",
+    "glob": "^10.3.10",
+    "mocha": "^10.2.0",
+    "playwright": "^1.40.0",
+    "rimraf": "^5.0.5",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}

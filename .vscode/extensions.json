@@ -1,0 +1,15 @@
+{
+  // Configuration for CodeSandbox
+  "recommendations": [
+    // wasm
+    "ms-vscode.wasm-wasi-core",
+    "ms-vscode.webshell",
+    // development
+    "esbenp.prettier-vscode",
+    // rust
+    "vadimcn.vscode-lldb",
+    "rust-lang.rust-analyzer",
+    "tamasfe.even-better-toml",
+    "serayuzgur.crates"
+  ]
+}
