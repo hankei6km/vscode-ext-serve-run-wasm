@@ -1,0 +1,34 @@
+[package]
+name = "workspace"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "crw"
+path = "src/client/src/lib.rs"
+
+[[bin]]
+name = "crw"
+path = "src/client/src/main.rs"
+
+[dependencies]
+async-stream = "0.3.5"
+clap = { version = "4.4.6", features = ["derive"] }
+futures-core = "0.3.29"
+futures-util = "0.3.29"
+hyper = { version = "0.14.27", features = ["stream"] }
+hyperlocal = "0.8.0"
+is-terminal = "0.4.9"
+serde = { version = "1.0.189", features = ["derive"] }
+serde_json = "1.0.107"
+tokio = { version = "1.33.0", features = [
+    "rt",
+    "macros",
+    "io-std",
+    "rt-multi-thread",
+    "sync",
+    "io-util",
+] }
+tokio-stream = "0.1.14"
+tokio-util = { version = "0.7.10", features = ["io"] }
+url = "2.4.1"

@@ -1,5 +1,5 @@
 {
-  "name": "test-vscode-ext-serve-run-wasm",
+  "name": "vscode-ext-serve-run-wasm",
   "dockerFile": "Dockerfile",
   "features": {
     "ghcr.io/devcontainers/features/common-utils:2": {
@@ -26,7 +26,6 @@
         "esbenp.prettier-vscode",
         // rust
         "vadimcn.vscode-lldb",
-        "mutantdino.resourcemonitor",
         "rust-lang.rust-analyzer",
         "tamasfe.even-better-toml",
         "serayuzgur.crates"

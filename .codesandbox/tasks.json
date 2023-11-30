@@ -4,6 +4,14 @@
     {
       "command": "rustup target add wasm32-wasi",
       "name": "rustup target add wasm32-wasi"
+    },
+    {
+      "command": " npm ci",
+      "name": "npm ci"
+    },
+    {
+      "command": "npx playwright install --with-deps",
+      "name": "npx playwright install --with-deps"
     }
   ],
 
