@@ -1,4 +1,4 @@
-name: "relabel by sem pr"
+name: 'relabel by sem pr'
 on:
   pull_request_target:
     types:
@@ -17,7 +17,7 @@ jobs:
         uses: hankei6km/gha-sem-from-title@v0
         with:
           title: ${{ github.event.pull_request.title }}
-      - name: edit
+      - name: relabel-by-sem-pr-type
         uses: hankei6km/gha-sem-pr-labeler@v0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -25,3 +25,7 @@ jobs:
           pr_num: ${{ github.event.pull_request.number }}
           type: ${{ steps.info.outputs.type }}
           is_breaking_change: ${{ steps.info.outputs.is_breaking_change }}
+      - name: label-scope-by-changed-files
+        uses: actions/labeler@v5.0.0-beta.1
+        with:
+          configuration-path: .github/labeler.yml
