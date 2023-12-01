@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# This script can be used when initializing labels for repositories that use gha-sem-pr-labeler.
-
 # set -e
 
 LABELS_TEXT_COLOR_DESCRIPTIOM=(
@@ -17,6 +15,8 @@ LABELS_TEXT_COLOR_DESCRIPTIOM=(
     "sem-pr: chore,#b0b0b0,Chores and miscellaneous tasks"
     "sem-pr: revert,#d73a4a,Reverts previous changes"
     "sem-pr: breaking change,#e99695, This change may affect existing functionality or APIs"
+    "scope: client,#C2E0C6,Client-related changes"
+    "scope: extension,#BFD4F2,Extension-related changes"
 )
 
 for label_color_description in "${LABELS_TEXT_COLOR_DESCRIPTIOM[@]}"; do
