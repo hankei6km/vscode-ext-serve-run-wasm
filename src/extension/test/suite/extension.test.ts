@@ -210,9 +210,9 @@ suite('http servr for run wasm', () => {
         'test_out',
         'run_noent.txt'
       )
-      assert.deepEqual(
+      assert.match(
         (await vscode.workspace.fs.readFile(filename)).toString(),
-        "run: EntryNotFound (FileSystemError): Error: ENOENT: no such file or directory, open '/workspace/foo.wasm'\n",
+        /run: EntryNotFound \(FileSystemError\): Error: ENOENT: no such file or directory, open '.+\/foo\.wasm'\n/,
         'run_noent.txt'
       )
     }
