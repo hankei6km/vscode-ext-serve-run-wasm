@@ -1,3 +1,4 @@
+// check
 export function dataToNumberArray(data) {
   return Array.from(
     (() => {
