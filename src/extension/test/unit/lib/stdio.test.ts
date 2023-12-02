@@ -1,17 +1,17 @@
 import * as assert from 'assert'
 import { PassThrough } from 'node:stream'
-import { getPassHandler } from '../../../lib/handleRun'
+import { getOutputHandler } from '../../../lib/stdio'
 
 suite('HandleRun', () => {
   suite('getPassHandler', () => {
     test('pipe is undefined', () => {
-      const handler = getPassHandler('out')
+      const handler = getOutputHandler('out')
       handler(Array.from(Buffer.from('undefined pipe')))
     })
 
     test('pass to out', () => {
       const pipe = new PassThrough()
-      const handler = getPassHandler('out', pipe)
+      const handler = getOutputHandler('out', pipe)
       handler(Array.from(Buffer.from('test out')))
       assert.deepEqual(JSON.parse(pipe.read().toString()), {
         kind: 'out',
@@ -21,7 +21,7 @@ suite('HandleRun', () => {
 
     test('pass to err', () => {
       const pipe = new PassThrough()
-      const handler = getPassHandler('err', pipe)
+      const handler = getOutputHandler('err', pipe)
       handler(Array.from(Buffer.from('test err')))
       assert.deepEqual(JSON.parse(pipe.read().toString()), {
         kind: 'err',
