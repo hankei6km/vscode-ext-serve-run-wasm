@@ -1,4 +1,4 @@
-'scope: extension':
+scope_extension:
   - all:
       - changed-files:
           - AnyGlobToAnyFile: ['src/extension/**/*']
