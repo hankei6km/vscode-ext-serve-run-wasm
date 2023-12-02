@@ -1,18 +1,19 @@
-scope_extension:
+'scope: extension':
   - all:
       - changed-files:
-          - AnyGlobToAnyFile: ['src/extension/**/*']
-          - AnyGlobToAnyFile: ['esbuild.config.mjs']
-          - AnyGlobToAnyFile: ['esbuild.test-electron.config.mjs']
-          - AnyGlobToAnyFile: ['tsconfig.json']
-          - AnyGlobToAnyFile: ['.vscodeignore', dot: true]
-          - AnyGlobToAnyFile: ['package-lock.json']
-          - AnyGlobToAnyFile: ['package.json']
+          - AnyGlobToAnyFile:
+              - 'src/extension/**'
+              - 'esbuild.config.mjs'
+              - 'esbuild.test-electron.config.mjs'
+              - 'tsconfig.json'
+              - '.vscodeignore'
+              - 'package-lock.json'
+              - 'package.json'
 
 'scope: client':
   - all:
       - changed-files:
-          - AnyGlobToAnyFile: ['src/client/**/*']
-          - AnyGlobToAnyFile: ['Cargo.lock']
-          - AnyGlobToAnyFile: ['Cargo.toml']
-          # - AnyGlobToAnyFile: ['package.json']
+          - AnyGlobToAnyFile:
+              - 'src/client/**'
+              - 'Cargo.lock'
+              - 'Cargo.toml'
