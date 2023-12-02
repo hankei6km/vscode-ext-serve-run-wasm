@@ -133,6 +133,10 @@ suite('http servr for run wasm', () => {
         ' | sha256sum > test_out/run_seq.txt'
     )
 
+    terminal.sendText(
+      `echo "" | ${clientBin} run foo.wasm` + ' 2> test_out/run_noent.txt'
+    )
+
     terminal.sendText('exit')
 
     // wait terminal is closed
@@ -198,6 +202,18 @@ suite('http servr for run wasm', () => {
         // seq 4000 | sha256sum
         '8060aa0ac20a3e5db2b67325c98a0122f2d09a612574458225dcb9a086f87cc3  -\n',
         'run_seq.txt'
+      )
+    }
+    {
+      const filename = vscode.Uri.joinPath(
+        vscode.workspace.workspaceFolders![0].uri,
+        'test_out',
+        'run_noent.txt'
+      )
+      assert.deepEqual(
+        (await vscode.workspace.fs.readFile(filename)).toString(),
+        "run: EntryNotFound (FileSystemError): Error: ENOENT: no such file or directory, open '/workspace/foo.wasm'\n",
+        'run_noent.txt'
       )
     }
   })

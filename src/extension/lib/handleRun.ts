@@ -1,12 +1,13 @@
 import { Wasm, Stdio, ProcessOptions, WasmProcess } from '@vscode/wasm-wasi'
 import { Readable as NodeReadable, Writable as NodeWritable } from 'node:stream'
-import { IpcHandler } from './ipcServer'
+import type { Uri } from 'vscode'
+import { IpcHandler, getWasmBits } from './ipcServer'
 import { ArgsForRun, memoryDescriptor } from './args'
 import { getOutputHandler } from './stdio'
 
 type PayloadRun = {
+  workspaceFoler: Uri
   cwd: string
-  wasmBits: Uint8Array
   args: ArgsForRun
   pipeIn?: NodeReadable
   pipeOut?: NodeWritable
@@ -49,7 +50,11 @@ export class HandleRun implements IpcHandler {
       trace: true
     }
     try {
-      const module = await WebAssembly.compile(request.wasmBits)
+      const wasmBits = await getWasmBits(
+        request.workspaceFoler,
+        request.args.cmdPath
+      )
+      const module = await WebAssembly.compile(wasmBits)
       const memory = memoryDescriptor(request.args.runArgs)
 
       if (memory !== undefined) {
@@ -127,7 +132,7 @@ export class HandleRun implements IpcHandler {
       }
       // TODO: pipe 用のストリームを開放(おそらく開放されない)
     } catch (err: any) {
-      //void pty.write(`Launching python failed: ${err.toString()}`)
+      handleToErr(Array.from(Buffer.from(`run: ${err.toString()}\n`)))
     }
     return { kind: 'status', data: [exitStatus] }
   }

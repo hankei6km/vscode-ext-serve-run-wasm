@@ -57,7 +57,6 @@ export class IpcServer implements Disposable {
     channel.info(`Running ${name}...`)
 
     const { route, args } = getRouteAndArgs(req.url || '')
-    const bits = await getWasmBits(this.context.extensionUri, args.cmdPath)
 
     const handler = this.handlers.get(route)
     if (!handler) {
@@ -65,8 +64,9 @@ export class IpcServer implements Disposable {
       return
     }
     const pRet = handler.handle({
+      // workspaceFoler: workspace.workspaceFolders?.[0].uri ?? Uri.file(''),
+      workspaceFoler: this.context.extensionUri,
       cwd: workspace.workspaceFolders?.[0].uri.fsPath ?? '',
-      wasmBits: bits,
       args,
       pipeIn: req,
       pipeOut: res,
