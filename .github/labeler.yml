@@ -1,7 +1,7 @@
 'scope: extension':
   - all:
       - changed-files:
-          - AnyGlobToAnyFile: ['src/extension/**']
+          - AnyGlobToAnyFile: ['src/extension/**/*']
           - AnyGlobToAnyFile: ['esbuild.config.mjs']
           - AnyGlobToAnyFile: ['esbuild.test-electron.config.mjs']
           - AnyGlobToAnyFile: ['tsconfig.json']
@@ -12,7 +12,7 @@
 'scope: client':
   - all:
       - changed-files:
-          - AnyGlobToAnyFile: ['src/client/**']
+          - AnyGlobToAnyFile: ['src/client/**/*']
           - AnyGlobToAnyFile: ['Cargo.lock']
           - AnyGlobToAnyFile: ['Cargo.toml']
           # - AnyGlobToAnyFile: ['package.json']
