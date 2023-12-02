@@ -25,7 +25,3 @@ jobs:
           pr_num: ${{ github.event.pull_request.number }}
           type: ${{ steps.info.outputs.type }}
           is_breaking_change: ${{ steps.info.outputs.is_breaking_change }}
-      - name: label-scope-by-changed-files
-        uses: actions/labeler@v5.0.0-beta.1
-        with:
-          configuration-path: .github/labeler.yml
