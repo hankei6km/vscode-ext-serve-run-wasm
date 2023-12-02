@@ -1,43 +1,18 @@
 import { Wasm, Stdio, ProcessOptions, WasmProcess } from '@vscode/wasm-wasi'
 import { Readable as NodeReadable, Writable as NodeWritable } from 'node:stream'
-import { IpcHandler } from './ipcServer'
+import type { Uri } from 'vscode'
+import { IpcHandler, getWasmBits } from './ipcServer'
 import { ArgsForRun, memoryDescriptor } from './args'
+import { getOutputHandler } from './stdio'
 
 type PayloadRun = {
+  workspaceFoler: Uri
   cwd: string
-  wasmBits: Uint8Array
   args: ArgsForRun
   pipeIn?: NodeReadable
   pipeOut?: NodeWritable
   pipeErr?: NodeWritable
   pipeStatus?: NodeWritable
-}
-
-export type RespRunOut = {
-  kind: 'out'
-  data: string
-}
-
-export type RespRunErr = {
-  kind: 'err'
-  data: number[]
-}
-
-export type RespStatus = {
-  kind: 'status'
-  code: number[]
-}
-
-export function getPassHandler(
-  kind: 'out' | 'err',
-  pipe?: NodeWritable
-): (data: Uint8Array | number[]) => void {
-  if (pipe === undefined) {
-    return (_data: Uint8Array | number[]) => {}
-  }
-  return (data: Uint8Array | number[]) => {
-    pipe.write(`${JSON.stringify({ kind, data: Array.from(data) })}\n`)
-  }
 }
 
 export class HandleRun implements IpcHandler {
@@ -59,8 +34,8 @@ export class HandleRun implements IpcHandler {
     //const pipeIn = wasm.createWritable()
     // pty の扱いどうする？
     // (そもそも wasi で pty ってどうなってるの？)
-    const handleToOut = getPassHandler('out', request.pipeOut)
-    const handleToErr = getPassHandler('err', request.pipeErr)
+    const handleToOut = getOutputHandler('out', request.pipeOut)
+    const handleToErr = getOutputHandler('err', request.pipeErr)
     const stdio: Stdio = {
       in: { kind: 'pipeIn' },
       out: { kind: 'pipeOut' },
@@ -75,7 +50,11 @@ export class HandleRun implements IpcHandler {
       trace: true
     }
     try {
-      const module = await WebAssembly.compile(request.wasmBits)
+      const wasmBits = await getWasmBits(
+        request.workspaceFoler,
+        request.args.cmdPath
+      )
+      const module = await WebAssembly.compile(wasmBits)
       const memory = memoryDescriptor(request.args.runArgs)
 
       if (memory !== undefined) {
@@ -153,7 +132,7 @@ export class HandleRun implements IpcHandler {
       }
       // TODO: pipe 用のストリームを開放(おそらく開放されない)
     } catch (err: any) {
-      //void pty.write(`Launching python failed: ${err.toString()}`)
+      handleToErr(Array.from(Buffer.from(`run: ${err.toString()}\n`)))
     }
     return { kind: 'status', data: [exitStatus] }
   }
