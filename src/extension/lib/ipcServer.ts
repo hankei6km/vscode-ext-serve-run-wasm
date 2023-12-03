@@ -21,25 +21,28 @@ export interface IpcHandler {
 }
 
 export async function getWasmBits(
-  workspaceFoler: Uri,
+  cwd: Uri,
   filename: string
 ): Promise<Uint8Array> {
-  return await workspace.fs.readFile(Uri.joinPath(workspaceFoler, filename))
+  if (!filename.startsWith('/')) {
+    return await workspace.fs.readFile(Uri.joinPath(cwd, filename))
+  }
+  return await workspace.fs.readFile(Uri.file(filename))
 }
 
 export class IpcServer implements Disposable {
   private server: http.Server
   private _handler: http.RequestListener
-  private context: ExtensionContext
+  // private context: ExtensionContext
   private ipcHandlePath: IpcHandlePath
   private wasm: Wasm
   private handlers: Map<string, IpcHandler> = new Map()
   constructor(
-    context: ExtensionContext,
+    _context: ExtensionContext,
     ipcHandlePath: IpcHandlePath,
     wasm: Wasm
   ) {
-    this.context = context
+    // this.context = context
     this.ipcHandlePath = ipcHandlePath
     this.wasm = wasm
     this.handlers.set('/run', new HandleRun(this.wasm))
@@ -64,9 +67,9 @@ export class IpcServer implements Disposable {
       return
     }
     const pRet = handler.handle({
-      // workspaceFoler: workspace.workspaceFolders?.[0].uri ?? Uri.file(''),
-      workspaceFoler: this.context.extensionUri,
-      cwd: workspace.workspaceFolders?.[0].uri.fsPath ?? '',
+      cwd: args.runArgs.cwd
+        ? Uri.file(args.runArgs.cwd)
+        : workspace.workspaceFolders?.[0].uri ?? Uri.file(''),
       args,
       pipeIn: req,
       pipeOut: res,
