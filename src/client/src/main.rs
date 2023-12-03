@@ -62,6 +62,11 @@ async fn main() {
                 memory_shared: *memory_shared,
                 force_exit_after_n_seconds_stdin_is_closed:
                     *force_exit_after_n_seconds_stdin_is_closed,
+                cwd: std::env::current_dir()
+                    .unwrap()
+                    .to_str()
+                    .unwrap()
+                    .to_string(),
                 files: files.clone(),
             });
 

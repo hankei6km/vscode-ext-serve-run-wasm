@@ -6,8 +6,7 @@ import { ArgsForRun, memoryDescriptor } from './args'
 import { getOutputHandler } from './stdio'
 
 type PayloadRun = {
-  workspaceFoler: Uri
-  cwd: string
+  cwd: Uri
   args: ArgsForRun
   pipeIn?: NodeReadable
   pipeOut?: NodeWritable
@@ -50,10 +49,7 @@ export class HandleRun implements IpcHandler {
       trace: true
     }
     try {
-      const wasmBits = await getWasmBits(
-        request.workspaceFoler,
-        request.args.cmdPath
-      )
+      const wasmBits = await getWasmBits(request.cwd, request.args.cmdPath)
       const module = await WebAssembly.compile(wasmBits)
       const memory = memoryDescriptor(request.args.runArgs)
 

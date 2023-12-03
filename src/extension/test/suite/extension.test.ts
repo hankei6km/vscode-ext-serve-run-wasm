@@ -106,30 +106,36 @@ suite('http servr for run wasm', () => {
     if (terminal === undefined) return
 
     const clientBin = '../target/release/crw'
-    const wasmFile = 'wasm/bin/chk1.wasm'
+    const wasmFileAbsPath = `${vscode.workspace.workspaceFolders?.[0].uri.path}/../wasm/bin/chk1.wasm`
+    const wasmFileRelPath = `../wasm/bin/chk1.wasm`
 
     terminal.sendText(
-      `echo "" | ${clientBin} run ${wasmFile} echo test 123` +
+      `echo "" | ${clientBin} run ${wasmFileAbsPath} echo test 123` +
         ' > test_out/run_out.txt'
     )
 
     terminal.sendText(
-      `echo "" | ${clientBin} run ${wasmFile} err TEST 456` +
+      `echo "" | ${clientBin} run ${wasmFileRelPath} echo test 123 rel` +
+        ' > test_out/run_out_rel.txt'
+    )
+
+    terminal.sendText(
+      `echo "" | ${clientBin} run ${wasmFileAbsPath} err TEST 456` +
         ' 2> test_out/run_err.txt'
     )
 
     terminal.sendText(
-      `seq 10000 | ${clientBin} run ${wasmFile} --force-exit-after-n-seconds-stdin-is-closed 5 pipe` +
+      `seq 10000 | ${clientBin} run ${wasmFileAbsPath} --force-exit-after-n-seconds-stdin-is-closed 5 pipe` +
         ' | sha256sum> test_out/run_pipe.txt'
     )
 
     terminal.sendText(
-      `echo "" | ${clientBin} run ${wasmFile} exit 123` +
+      `echo "" | ${clientBin} run ${wasmFileAbsPath} exit 123` +
         '; echo "${?}" > test_out/run_status.txt'
     )
 
     terminal.sendText(
-      `echo "" | ${clientBin} run ${wasmFile} seq 10000` +
+      `echo "" | ${clientBin} run ${wasmFileAbsPath} seq 10000` +
         ' | sha256sum > test_out/run_seq.txt'
     )
 
@@ -153,6 +159,18 @@ suite('http servr for run wasm', () => {
         (await vscode.workspace.fs.readFile(filename)).toString(),
         'test 123 \n',
         'run_out.txt'
+      )
+    }
+    {
+      const filename = vscode.Uri.joinPath(
+        vscode.workspace.workspaceFolders![0].uri,
+        'test_out',
+        'run_out_rel.txt'
+      )
+      assert.deepEqual(
+        (await vscode.workspace.fs.readFile(filename)).toString(),
+        'test 123 rel \n',
+        'run_out_rel.txt'
       )
     }
     {
