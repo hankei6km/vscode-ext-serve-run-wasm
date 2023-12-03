@@ -15,5 +15,6 @@
       - changed-files:
           - AnyGlobToAnyFile:
               - 'src/client/**'
+              - 'scripts/build-rel-client.sh'
               - 'Cargo.lock'
               - 'Cargo.toml'
