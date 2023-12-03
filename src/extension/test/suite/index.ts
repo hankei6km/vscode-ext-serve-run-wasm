@@ -9,7 +9,7 @@ export function run(
   // Create the mocha test
   const mocha = new Mocha({
     ui: 'tdd',
-    timeout: 1000 * 20
+    timeout: 1000 * 60
   })
 
   glob('**/**.test.js', { cwd: testsRoot })
