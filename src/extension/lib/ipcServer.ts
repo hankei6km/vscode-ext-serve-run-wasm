@@ -67,9 +67,7 @@ export class IpcServer implements Disposable {
       return
     }
     const pRet = handler.handle({
-      cwd: args.runArgs.cwd
-        ? Uri.file(args.runArgs.cwd)
-        : workspace.workspaceFolders?.[0].uri ?? Uri.file(''),
+      cwd: args.runArgs.cwd ? Uri.file(args.runArgs.cwd) : undefined,
       args,
       pipeIn: req,
       pipeOut: res,
