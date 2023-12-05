@@ -1,8 +1,8 @@
 {
   "name": "vscode-ext-serve-run-wasm",
   "version": "0.1.0",
-  "displayName": "Experimental - serve the ability to run wasm on the terminal",
-  "description": "Run wasm on VS Code Web Shell",
+  "displayName": "Experimental - run wasm on the terminal",
+  "description": "serve the ability to run wasm on the terminal",
   "keywords": [
     "wasm",
     "wasi",
