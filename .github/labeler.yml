@@ -1,7 +1,7 @@
 'scope: extension':
   - all:
       - changed-files:
-          - AnyGlobToAnyFile:
+          - any-glob-to-any-file:
               - 'src/extension/**'
               - 'esbuild.config.mjs'
               - 'esbuild.test-electron.config.mjs'
@@ -13,7 +13,7 @@
 'scope: client':
   - all:
       - changed-files:
-          - AnyGlobToAnyFile:
+          - any-glob-to-any-file:
               - 'src/client/**'
               - 'scripts/build-rel-client.sh'
               - 'Cargo.lock'
