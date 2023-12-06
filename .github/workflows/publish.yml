@@ -111,14 +111,12 @@ jobs:
           npm run lint:type-check
           npm run test
 
-      # 今回の target は desktop 全般と web に固定。
+      # 今回の target は desktop 全般に固定。
       - name: Publish pre-release
         if: github.event.release.prerelease == true
         run: |
           npx vsce package --pre-release
-          npx vsce package --target web --pre-release
           npx vsce publish --pre-release
-          npx vsce publish --target web --pre-release
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
           GH_TOKEN: ${{ github.token }}
@@ -127,9 +125,7 @@ jobs:
         if: github.event.release.prerelease != true
         run: |
           npx vsce package
-          npx vsce package --target web
           npx vsce publish
-          npx vsce publish --target web
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
           GH_TOKEN: ${{ github.token }}
