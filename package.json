@@ -18,7 +18,7 @@
     "url": "https://github.com/hankei6km/vscode-ext-serve-run-wasm/issues"
   },
   "engines": {
-    "vscode": "^1.82.0"
+    "vscode": "^1.84.2"
   },
   "categories": [
     "Other"
