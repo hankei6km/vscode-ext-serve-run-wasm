@@ -16,7 +16,7 @@ However, the terminal environment is only supported on Linux (because the client
 
 The pre-built binary can be downloaded from the release of the GitHub repository.
 
-todo: ここにダウンロードの詳細を追記。
+- [Releases · hankei6km/vscode-ext-serve-run-wasm](https://github.com/hankei6km/vscode-ext-serve-run-wasm/releases)
 
 Alternatively, if you have a Rust environment, you can install it with `cargo install`.
 
