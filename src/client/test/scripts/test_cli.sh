@@ -27,7 +27,7 @@ cat "${ERR_FILE}"
 echo ""
 
 diff <(echo -n '/run') "${OUT_FILE}"
-diff <(echo -n '["--memory-initial","100","--memory-maximum","100","--memory-shared","true","--force_exit_after_n_seconds_stdin_is_closed","0","--cwd","'"${PWD}"'","--","test.wasm"]') "${ERR_FILE}"
+diff <(echo -n '["--memory-initial","100","--memory-maximum","100","--memory-shared","true","--force-exit-after-n-seconds-stdin-is-closed","0","--cwd","'"${PWD}"'","--","test.wasm"]') "${ERR_FILE}"
 
 
 # TODO: リクエストが実行される前にテストが落ちるとサーバーが稼働したままになる.後処理を検討.
