@@ -72,9 +72,9 @@ export class HandleRun implements IpcHandler {
       }
       if (
         typeof request.args.runArgs[
-          'force_exit_after_n_seconds_stdin_is_closed'
+          'force-exit-after-n-seconds-stdin-is-closed'
         ] === 'number' &&
-        request.args.runArgs['force_exit_after_n_seconds_stdin_is_closed'] > 0
+        request.args.runArgs['force-exit-after-n-seconds-stdin-is-closed'] > 0
       ) {
         ;(async () => {
           // https://github.com/microsoft/vscode-wasm/issues/110
@@ -103,7 +103,7 @@ export class HandleRun implements IpcHandler {
                 resolve,
                 1000 *
                   request.args.runArgs[
-                    'force_exit_after_n_seconds_stdin_is_closed'
+                    'force-exit-after-n-seconds-stdin-is-closed'
                   ]
               )
             )
