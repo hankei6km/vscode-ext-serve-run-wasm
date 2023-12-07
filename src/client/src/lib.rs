@@ -122,11 +122,11 @@ fn build_url(run_args: RunArgs) -> Url {
     let mut url = Url::parse("http://localhost:3000/run").unwrap();
 
     let mut args: Vec<String> = vec![
-        "--memory_initial".to_string(),
+        "--memory-initial".to_string(),
         run_args.memory_initial.to_string(),
-        "--memory_maximum".to_string(),
+        "--memory-maximum".to_string(),
         run_args.memory_maximum.to_string(),
-        "--memory_shared".to_string(),
+        "--memory-shared".to_string(),
         run_args.memory_shared.to_string(),
         "--force_exit_after_n_seconds_stdin_is_closed".to_string(),
         run_args
@@ -165,7 +165,7 @@ mod test_build_url {
         let url = build_url(args);
         assert_eq!(
             url.as_str(),
-            "http://localhost:3000/run?args=%5B%22--memory_initial%22%2C%221%22%2C%22--memory_maximum%22%2C%222%22%2C%22--memory_shared%22%2C%22true%22%2C%22--force_exit_after_n_seconds_stdin_is_closed%22%2C%220%22%2C%22--cwd%22%2C%22%2Fpath%2Fto%22%2C%22--%22%2C%22test1.wasm%22%2C%22--foo%22%2C%22bar%22%5D"
+            "http://localhost:3000/run?args=%5B%22--memory-initial%22%2C%221%22%2C%22--memory-maximum%22%2C%222%22%2C%22--memory-shared%22%2C%22true%22%2C%22--force_exit_after_n_seconds_stdin_is_closed%22%2C%220%22%2C%22--cwd%22%2C%22%2Fpath%2Fto%22%2C%22--%22%2C%22test1.wasm%22%2C%22--foo%22%2C%22bar%22%5D"
         );
     }
 }
