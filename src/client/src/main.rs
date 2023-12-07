@@ -16,11 +16,11 @@ enum Commands {
     #[clap(name = "run", about = "run a wasm")]
     Run {
         // define --memory-initial=nnn flag
-        #[clap(long, default_value = "0")]
+        #[clap(long, default_value = "20")]
         memory_initial: u32,
 
         // --memory-maximum=nnn
-        #[clap(long, default_value = "0")]
+        #[clap(long, default_value = "100")]
         memory_maximum: u32,
 
         // --memory-shared=boolean
