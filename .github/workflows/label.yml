@@ -1,8 +1,10 @@
-name: 'relabel by sem pr'
+name: "labeler"
 on:
   pull_request_target:
     types:
       - opened
+      - synchronize
+      - reopened
       - edited
 
 jobs:
@@ -12,12 +14,21 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - name: info
+      # scope
+      - name: label-scope-by-changed-files
+        if: ${{ github.event_name == 'pull_request_target' && github.event.action != 'edited' }}
+        uses: actions/labeler@v5
+        with:
+          configuration-path: .github/labeler.yml
+      # sem-pr-type
+      - name: sem-pr-info
+        if: ${{ github.event_name == 'pull_request_target' && (github.event.action == 'opened' || github.event.action == 'edited') }}
         id: info
         uses: hankei6km/gha-sem-from-title@v0
         with:
           title: ${{ github.event.pull_request.title }}
       - name: relabel-by-sem-pr-type
+        if: ${{ github.event_name == 'pull_request_target' && (github.event.action == 'opened' || github.event.action == 'edited') }}
         uses: hankei6km/gha-sem-pr-labeler@v0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
