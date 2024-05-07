@@ -30,5 +30,5 @@ tokio = { version = "1.37.0", features = [
     "io-util",
 ] }
 tokio-stream = "0.1.15"
-tokio-util = { version = "0.7.10", features = ["io"] }
+tokio-util = { version = "0.7.11", features = ["io"] }
 url = "2.5.0"
