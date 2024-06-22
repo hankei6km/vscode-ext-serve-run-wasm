@@ -5,7 +5,7 @@ import {
   // RootFileSystem,
   // Stdio
   // WasmProcess
-} from '@vscode/wasm-wasi'
+} from '@vscode/wasm-wasi/v1'
 import * as http from 'node:http'
 import * as fs from 'node:fs'
 

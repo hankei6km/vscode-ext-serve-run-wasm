@@ -1,5 +1,5 @@
 import type { ExtensionContext } from 'vscode'
-import { Wasm } from '@vscode/wasm-wasi'
+import { Wasm } from '@vscode/wasm-wasi/v1'
 
 import { IpcHandlePath } from './lib/ipcHandlePath.js'
 import { IpcServer } from './lib/ipcServer.js'

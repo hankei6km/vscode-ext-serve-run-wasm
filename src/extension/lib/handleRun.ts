@@ -1,4 +1,4 @@
-import { Wasm, Stdio, ProcessOptions, WasmProcess } from '@vscode/wasm-wasi'
+import { Wasm, Stdio, ProcessOptions, WasmProcess } from '@vscode/wasm-wasi/v1'
 import { Readable as NodeReadable, Writable as NodeWritable } from 'node:stream'
 import type { Uri } from 'vscode'
 import { IpcHandler, getWasmBits } from './ipcServer'
