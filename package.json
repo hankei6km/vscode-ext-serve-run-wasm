@@ -18,7 +18,7 @@
     "url": "https://github.com/hankei6km/vscode-ext-serve-run-wasm/issues"
   },
   "engines": {
-    "vscode": "^1.84.2"
+    "vscode": "^1.90.0"
   },
   "categories": [
     "Other"
@@ -55,7 +55,7 @@
     "@types/minimist": "^1.2.5",
     "@types/mocha": "^10.0.6",
     "@types/node": "^20.14.2",
-    "@types/vscode": "^1.84.2",
+    "@types/vscode": "^1.90.0",
     "@vscode/test-electron": "^2.4.0",
     "@vscode/vsce": "^2.27.0",
     "assert": "^2.1.0",
