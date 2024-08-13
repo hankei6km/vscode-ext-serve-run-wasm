@@ -65,7 +65,7 @@
     "estree-util-to-js": "^2.0.0",
     "glob": "^11.0.0",
     "mocha": "^10.7.3",
-    "playwright": "^1.45.3",
+    "playwright": "^1.46.0",
     "rimraf": "^6.0.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
